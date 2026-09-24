@@ -65,9 +65,86 @@ main{max-width:1500px;margin:auto;padding:22px}
 @keyframes pop{from{transform:translateY(15px);opacity:0}to{transform:none;opacity:1}}@keyframes float{50%{transform:translateY(-8px)}}.float{animation:float 3s ease-in-out infinite}
 @media(max-width:1100px){.worlds{grid-template-columns:repeat(4,1fr)}.hero{grid-template-columns:1fr 1.4fr}.side{display:none}.bottomgrid{grid-template-columns:1fr 1fr}.hero h1{font-size:42px}}
 @media(max-width:700px){.topbar{flex-wrap:wrap}.logo{min-width:auto}.nav{order:3;flex-basis:100%}main{padding:12px}.hero{grid-template-columns:1fr;}.hero-photo{height:330px}.hero-photo:after{background:linear-gradient(0deg,#eafcff,transparent 45%)}.hero-copy{padding:28px 20px}.hero h1{font-size:38px}.worlds{grid-template-columns:repeat(2,1fr)}.bottomgrid,.dashboard{grid-template-columns:1fr}.game-options{grid-template-columns:1fr}}
+
+/* ===== Stuvi Magic Upgrade ===== */
+.magic-layer{position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.sticker{position:absolute;font-size:28px;animation:stuviFloat 6s ease-in-out infinite;filter:drop-shadow(0 5px 8px #0001)}
+.sticker:nth-child(1){left:3%;top:18%;animation-delay:-1s}.sticker:nth-child(2){right:5%;top:28%;animation-delay:-3s}
+.sticker:nth-child(3){left:8%;bottom:15%;animation-delay:-4s}.sticker:nth-child(4){right:10%;bottom:10%;animation-delay:-2s}
+.sticker:nth-child(5){left:47%;top:10%;animation-delay:-5s}.sticker:nth-child(6){right:32%;top:58%;animation-delay:-2.5s}
+@keyframes stuviFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(7deg)}}
+@keyframes stuviGlow{0%,100%{box-shadow:0 0 0 0 #ff5da844}50%{box-shadow:0 0 0 16px #ff5da800}}
+@keyframes stuviGrow{0%{transform:scale(.92) translateY(12px);opacity:.5}45%{transform:scale(1.05) translateY(-5px);opacity:1}100%{transform:scale(1) translateY(0);opacity:1}}
+@keyframes sparkleIn{0%{transform:scale(0) rotate(-30deg);opacity:0}70%{transform:scale(1.2) rotate(10deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+.magic-card{position:relative;overflow:hidden}
+.magic-card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-80px;top:-80px;background:#fff5;animation:stuviFloat 7s ease-in-out infinite}
+.hero-photo img{animation:stuviGrow 2.2s ease-out both,stuviFloat 6s ease-in-out 2.2s infinite;transform-origin:50% 80%}
+.hero-photo{min-height:345px}
+.stuvi-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:7px 12px;font-weight:900;box-shadow:0 8px 20px #6240dc18}
+.new-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.photo-card{background:#fff;border-radius:20px;padding:8px;box-shadow:var(--shadow);position:relative;animation:sparkleIn .5s ease both}
+.photo-card img{width:100%;height:170px;object-fit:cover;border-radius:15px;cursor:pointer}
+.photo-card .del{position:absolute;right:13px;top:13px;width:32px;height:32px;border-radius:50%;background:#fff;color:#a52d62;font-weight:900}
+.lightbox{position:fixed;inset:0;background:#11174bdd;display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.lightbox.show{display:flex}.lightbox img{max-width:95vw;max-height:88vh;border-radius:22px;box-shadow:0 25px 80px #0008}.lightbox button{position:absolute;right:20px;top:20px}
+.chatbox{height:430px;display:flex;flex-direction:column;background:linear-gradient(180deg,#faf8ff,#fff);border:1px solid #eeeafa;border-radius:22px;overflow:hidden}
+.chat-head{padding:14px 16px;background:linear-gradient(90deg,#7147e8,#ff5da8);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.chat-messages{flex:1;overflow:auto;padding:15px}.msg{max-width:80%;padding:11px 14px;border-radius:18px;margin:8px 0;line-height:1.45;animation:pop .25s ease}.msg.stuvi{background:#f0ebff;border-bottom-left-radius:5px}.msg.you{background:#7147e8;color:#fff;margin-left:auto;border-bottom-right-radius:5px}
+.chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid #eeeafa}.chat-input input{flex:1;margin:0}
+.chat-quick{display:flex;gap:7px;overflow:auto;padding:8px 12px;background:#fff}.chat-quick button{white-space:nowrap}
+.lang-select{border:0;border-radius:12px;padding:7px 9px;font-weight:800}
+.memory-card{background:linear-gradient(135deg,#fff,#fff2f8);border:1px solid #f0e1eb;border-radius:22px;padding:16px;position:relative;min-height:190px}
+.memory-card img{width:100%;height:145px;object-fit:cover;border-radius:15px;margin-bottom:10px}.memory-card .del{position:absolute;right:12px;top:12px;border-radius:50%;width:30px;height:30px}
+.growth-stage{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center;padding:18px;border-radius:22px;background:#fff;margin:12px 0;box-shadow:0 8px 25px #4e3c9a12;animation:stuviGrow .7s ease both}
+.growth-avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 10px 25px #7147e833;animation:stuviFloat 5s ease-in-out infinite}
+.growth-age{font-size:27px;font-weight:950;color:#7147e8}.dream{display:flex;gap:8px}.dream input{margin:0}
+.social-card{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;padding:15px;border-radius:18px;box-shadow:0 8px 25px #4e3c9a12}
+.social-icon{font-size:34px}.qr-box{text-align:center;background:linear-gradient(135deg,#fff8df,#f5edff);border:2px dashed #c9b9f7;border-radius:24px;padding:22px}.qr-preview{max-width:240px;max-height:240px;width:100%;object-fit:contain;border-radius:16px;background:#fff;padding:10px}
+.timeline{position:relative}.timeline:before{content:"";position:absolute;left:55px;top:0;bottom:0;width:4px;background:linear-gradient(#7147e8,#ff5da8,#39c9b1);border-radius:9px}.growth-stage{position:relative;margin-left:0}.growth-stage:after{content:"✨";position:absolute;left:38px;top:42px;font-size:20px}
+@media(max-width:700px){
+ .topbar{padding:9px 10px}.logo{font-size:16px}.avatar{width:38px;height:38px}
+ .nav{gap:3px}.nav button{padding:9px 10px;font-size:12px}
+ .hero-photo{min-height:300px}.growth-stage{grid-template-columns:78px 1fr;padding:12px}.growth-avatar{width:74px;height:74px}.growth-stage:after{left:25px;top:27px;font-size:15px}
+ .timeline:before{left:38px}.photo-grid{grid-template-columns:repeat(2,1fr)}.photo-card img{height:135px}
+ .chatbox{height:500px}.msg{max-width:90%}.sticker{font-size:22px}
+}
+@media(max-width:430px){.worlds{grid-template-columns:1fr}.hero h1{font-size:34px}.stats{gap:7px}.stat{padding:8px 10px}.new-grid{grid-template-columns:1fr}}
+
+
+
+/* Home-page floating Stuvi Buddy */
+.stuvi-chat-launcher{position:fixed;right:22px;bottom:22px;z-index:5000;width:68px;height:68px;border:0;border-radius:50%;cursor:pointer;background:linear-gradient(135deg,#7147e8,#ff6fae);color:#fff;font-size:30px;box-shadow:0 12px 35px #5d3bb655;animation:stuviFloat 3s ease-in-out infinite,stuviGlow 2.2s ease-in-out infinite}
+.stuvi-chat-launcher .chat-dot{position:absolute;right:2px;top:2px;width:15px;height:15px;background:#36c86f;border:3px solid #fff;border-radius:50%}
+.stuvi-chat-popup{position:fixed;right:22px;bottom:102px;z-index:4999;width:min(390px,calc(100vw - 28px));height:560px;background:#fff;border:1px solid #eeeafa;border-radius:26px;box-shadow:0 24px 70px #30205030;overflow:hidden;display:none;flex-direction:column;animation:pop .22s ease}
+.stuvi-chat-popup.open{display:flex}
+.stuvi-chat-popup .chat-head{padding:15px 16px;background:linear-gradient(135deg,#f7f0ff,#fff0f7);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stuvi-chat-popup .chat-head-left{display:flex;align-items:center;gap:10px}
+.stuvi-chat-popup .mini-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 12px #0002}
+.stuvi-chat-popup .chat-close{border:0;background:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px}
+.stuvi-chat-popup .chat-messages{flex:1;overflow:auto;padding:14px;background:linear-gradient(#fff,#fbf9ff)}
+.stuvi-chat-popup .popup-msg{max-width:84%;padding:10px 12px;border-radius:17px;margin:7px 0;font-size:14px;line-height:1.4;white-space:pre-wrap}
+.stuvi-chat-popup .popup-msg.stuvi{background:#f0eaff;border-bottom-left-radius:5px}
+.stuvi-chat-popup .popup-msg.you{background:#ffe7f1;margin-left:auto;border-bottom-right-radius:5px}
+.stuvi-chat-popup .popup-quick{display:flex;gap:6px;overflow:auto;padding:8px 10px;border-top:1px solid #eeeafa}
+.stuvi-chat-popup .popup-quick button{white-space:nowrap;border:1px solid #e5ddff;background:#faf8ff;border-radius:999px;padding:7px 10px;cursor:pointer;font-weight:700}
+.stuvi-chat-popup .popup-compose{display:flex;gap:7px;padding:10px;border-top:1px solid #eeeafa;background:#fff}
+.stuvi-chat-popup .popup-compose input{min-width:0;flex:1;border:1px solid #ddd8eb;border-radius:14px;padding:11px 12px;outline:none}
+.stuvi-chat-popup .popup-compose button{border:0;border-radius:14px;padding:0 14px;background:#7147e8;color:#fff;font-weight:800;cursor:pointer}
+.stuvi-chat-popup .popup-lang{font-size:12px;border:1px solid #ddd8eb;border-radius:10px;padding:6px;background:#fff}
+@media(max-width:700px){.stuvi-chat-launcher{right:14px;bottom:14px;width:60px;height:60px}.stuvi-chat-popup{right:10px;bottom:84px;width:calc(100vw - 20px);height:min(70vh,560px);border-radius:22px}}
+
+/* Parent Admin Security + Home Gift */
+.admin-only{display:none!important}.admin-auth .admin-only{display:inline-flex!important}
+#parent.page{min-height:60vh}.admin-lock{position:fixed;right:18px;bottom:18px;z-index:9998;width:46px;height:46px;border:0;border-radius:50%;background:#fff;box-shadow:0 8px 28px #0002;font-size:20px;cursor:pointer;opacity:.72}.admin-lock:hover{opacity:1;transform:scale(1.06)}
+.admin-modal{position:fixed;inset:0;background:#24153b99;display:none;align-items:center;justify-content:center;z-index:10050;padding:18px}.admin-modal.show{display:flex}.admin-modal-box{width:min(440px,100%);background:#fff;border-radius:26px;padding:26px;box-shadow:0 25px 80px #0004;animation:pop .22s ease}.admin-modal-box h2{margin:0 0 8px}.admin-modal-box .input{width:100%;box-sizing:border-box}.admin-error{color:#c43a68;font-weight:800;min-height:22px;margin:6px 0}
+.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.admin-card{padding:18px;border:1px solid #eeeafa;border-radius:20px;background:linear-gradient(135deg,#fff,#fbf8ff)}.admin-card h3{margin-top:0}.home-gift{margin-top:22px;border-radius:24px;padding:22px;background:linear-gradient(135deg,#fff1f8,#fff8d9,#eafcff);box-shadow:0 12px 30px #00000010}.home-gift-grid{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:center}.home-gift img{width:170px;height:170px;object-fit:contain;background:#fff;border-radius:18px;padding:8px;box-shadow:0 6px 20px #0002}.home-gift.empty{display:none}
+@media(max-width:700px){.admin-grid,.home-gift-grid{grid-template-columns:1fr}.home-gift img{margin:auto}}
 </style>
 </head>
 <body>
+<div class="magic-layer" aria-hidden="true"><span class="sticker">🌈</span><span class="sticker">🦋</span><span class="sticker">⭐</span><span class="sticker">🎈</span><span class="sticker">✨</span><span class="sticker">🌸</span></div>
+
 <header class="topbar">
   <div class="logo">⭐ Stuvi's <span>Learning</span> Universe 🚀</div>
   <nav class="nav">
@@ -76,10 +153,28 @@ main{max-width:1500px;margin:auto;padding:22px}
     <button data-page="science">🔬 Science</button><button data-page="creative">🎨 Create</button><button data-page="drawing">✏️ Draw</button>
     <button data-page="explore">🌍 Explore</button><button data-page="money">💰 Money</button>
     <button data-page="super">❤️ Super Me</button><button data-page="family">🌳 Family</button><button data-page="gallery">🖼️ Gallery</button>
-    <button data-page="parent">🔒 Parent</button>
+    <button data-page="memories">💖 6Y Memories</button><button data-page="growth">🌱 Growing Up</button>
+    <button data-page="chat">💬 Talk to Stuvi</button><button data-page="social">📱 Social</button>
+    <button class="admin-only" id="parentNavBtn" data-page="parent">🔒 Parent Admin</button>
   </nav>
   <img class="avatar" id="avatarImg" alt="Profile photo">
 </header>
+
+
+<!-- Floating Home Chatbot -->
+<button id="stuviChatLauncher" class="stuvi-chat-launcher" aria-label="Talk to Stuvi Buddy" onclick="toggleStuviPopup()">💬<span class="chat-dot"></span></button>
+<div id="stuviChatPopup" class="stuvi-chat-popup" role="dialog" aria-label="Stuvi Buddy chatbot">
+  <div class="chat-head">
+    <div class="chat-head-left">
+      <img id="popupChatAvatar" class="mini-avatar" alt="Stuvi">
+      <div><b>👧✨ Stuvi Buddy</b><div style="font-size:12px;color:#777">Ask me, learn with me, or say hello!</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px"><select id="popupChatLang" class="popup-lang" onchange="setPopupChatLanguage(this.value)"><option value="en">EN</option><option value="hi">हिं</option><option value="bn">বাং</option></select><button class="chat-close" onclick="toggleStuviPopup(false)" aria-label="Close">×</button></div>
+  </div>
+  <div id="popupChatMessages" class="chat-messages"></div>
+  <div class="popup-quick"><button onclick="popupQuick('hello')">👋 Hello</button><button onclick="popupQuick('learn')">📚 Learn</button><button onclick="popupQuick('story')">📖 Story</button><button onclick="popupQuick('happy')">😊 Cheer me</button></div>
+  <div class="popup-compose"><input id="popupChatInput" maxlength="180" placeholder="Type a message..." aria-label="Chat message"><button onclick="sendPopupChat()">Send 💌</button></div>
+</div>
 
 <main>
 <section id="home" class="page active">
@@ -125,6 +220,10 @@ main{max-width:1500px;margin:auto;padding:22px}
     <p style="font-size:19px">Your Level 7 Adventure is just getting started.</p>
     <button class="cta" onclick="birthdayMode()">👑 Open Birthday Mode</button>
   </div>
+<div class="home-gift" id="homeGiftCard">
+  <div class="section-title"><div><h2>🎁 Send Love to Stuvi</h2><p id="homeGiftMessage">If you would like to send Stuvi a gift, you can use the QR code below. 💖</p></div><span class="stuvi-badge">💝 Gift Corner</span></div>
+  <div class="home-gift-grid"><img id="homeGiftQR" alt="Stuvi gift QR code"><div><h3>📲 Scan the QR Code</h3><p>Thank you for being part of Stuvi's special world! ✨</p><small>QR code and gift message can only be changed from Parent Admin.</small></div></div>
+</div>
 </section>
 
 <section id="math" class="page">
@@ -215,18 +314,103 @@ main{max-width:1500px;margin:auto;padding:22px}
 </section>
 
 <section id="gallery" class="page">
-  <div class="game-card"><h1>🖼️ My Gallery</h1><p>Your saved creations appear here on this device.</p><div id="galleryList"></div></div>
+  <div class="game-card magic-card">
+    <div class="section-title"><div><h1>🖼️ Stuvi's Gallery</h1><p>Keep photos and creative memories together — stored privately on this device.</p></div><span class="stuvi-badge">📸 Magic Moments</span></div>
+    <div class="panel">
+      <h3>📷 Add Photos</h3>
+      <input class="input" type="file" id="galleryInput" accept="image/*" multiple>
+      <input class="input" id="galleryCaption" maxlength="100" placeholder="Optional caption for these photos">
+      <button class="save" onclick="addGalleryPhotos()">✨ Add to Gallery</button>
+    </div>
+    <div id="photoGallery" class="photo-grid"></div>
+    <h3 style="margin-top:28px">🎨 Stuvi's Creations</h3>
+    <div id="galleryList"></div>
+  </div>
 </section>
+
+
+<section id="memories" class="page">
+  <div class="game-card magic-card">
+    <div class="section-title"><div><h1>💖 My 6 Years of Memories</h1><p>Build a beautiful digital memory book for Stuvi.</p></div><span class="stuvi-badge">🎀 Since Day One</span></div>
+    <div class="new-grid">
+      <div class="panel"><h3>📝 Add a Memory</h3>
+        <input class="input" id="memAge" placeholder="Age / year (e.g. 1 year old)">
+        <input class="input" id="memTitle" maxlength="60" placeholder="Memory title">
+        <textarea class="input" id="memStory" maxlength="500" rows="5" placeholder="Tell Stuvi's story..."></textarea>
+        <input class="input" type="file" id="memPhoto" accept="image/*">
+        <button class="save" onclick="addMemory()">💾 Save Memory</button>
+      </div>
+      <div class="panel"><h3>✨ Memory Ideas</h3><p>🎂 First birthday</p><p>👣 First steps</p><p>🏫 First day at school</p><p>🎨 Favourite drawing</p><p>👨‍👩‍👧 Family trip</p><p>🏆 A proud moment</p><p>💖 A funny family memory</p></div>
+    </div>
+    <div id="memoryGrid" class="new-grid" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<section id="growth" class="page">
+  <div class="game-card magic-card">
+    <div class="section-title"><div><h1>🌱 Stuvi Growing Up</h1><p>Watch her little profile journey from childhood toward her future dreams.</p></div><span class="stuvi-badge">✨ Growing with Love</span></div>
+    <div class="panel" style="text-align:center">
+      <div style="font-size:55px" class="float">👧🏻 💖 🌟</div>
+      <h2>Every age is a new adventure!</h2>
+      <p>Her current profile photo is gently animated through every stage. Add a dream for the future below.</p>
+      <div class="dream"><input class="input" id="growthDream" maxlength="100" placeholder="Stuvi's dream for the future"><button class="save" onclick="saveGrowthDream()">🌟 Add Dream</button></div>
+      <div id="dreamList" class="chips"></div>
+    </div>
+    <div id="growthTimeline" class="timeline"></div>
+  </div>
+</section>
+
+<section id="chat" class="page">
+  <div class="game-card magic-card">
+    <div class="section-title"><div><h1>💬 Talk to Stuvi</h1><p>A friendly on-device Stuvi Buddy for little conversations, encouragement and learning.</p></div>
+      <select id="chatLang" class="lang-select" onchange="setChatLanguage(this.value)"><option value="en">English</option><option value="hi">हिन्दी</option><option value="bn">বাংলা</option></select>
+    </div>
+    <div class="chatbox">
+      <div class="chat-head"><b>👧✨ Stuvi Buddy</b><span>💖 Always cheering you on</span></div>
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-quick"><button class="chip" onclick="quickChat('hello')">👋 Hello</button><button class="chip" onclick="quickChat('learn')">📚 Teach me</button><button class="chip" onclick="quickChat('happy')">😊 Make me happy</button><button class="chip" onclick="quickChat('story')">📖 Story</button></div>
+      <div class="chat-input"><input class="input" id="chatInput" maxlength="180" placeholder="Talk to Stuvi..."><button class="save" onclick="sendChat()">Send 💌</button></div>
+    </div>
+    <p style="font-size:12px;color:#777;margin-top:10px">🔒 This simple chatbot works locally in the browser; it does not send the conversation to an online AI service.</p>
+  </div>
+</section>
+
+<section id="social" class="page">
+  <div class="game-card magic-card">
+    <div class="section-title"><div><h1>📱 Stuvi's Social Corner</h1><p>Add the social media pages you want family and friends to visit.</p></div><span class="stuvi-badge">🔗 My Links</span></div>
+    <div class="panel">
+      <input class="input" id="socialName" maxlength="30" placeholder="Platform name — YouTube, Instagram, Facebook...">
+      <input class="input" id="socialUrl" placeholder="https://...">
+      <button class="save" onclick="addSocial()">➕ Add Social Link</button>
+    </div>
+    <div id="socialList" class="new-grid"></div>
+  </div>
+</section>
+
+
 
 <section id="parent" class="page">
   <div class="game-card">
-    <h1>🔒 Parent Dashboard</h1>
-    <p>This dashboard is stored locally in this browser. It is a simple family dashboard, not a secure online account system.</p>
+    <div class="section-title"><div><h1>🔒 Parent Admin Center</h1><p>Private controls for the complete editable website content.</p></div><button class="save" onclick="adminLogout()">🔐 Lock Admin</button></div>
     <div class="dashboard">
       <div class="panel"><h3>⭐ Learning XP</h3><div class="big-number" id="pXP">0</div><p>Total XP earned</p></div>
       <div class="panel"><h3>🏆 Badges</h3><div class="big-number" id="pBadges">0</div><p>Achievements unlocked</p></div>
-      <div class="panel"><h3>📚 Activity Mix</h3><div class="barrow"><label>Math <span>80%</span></label><div class="bar"><i style="width:80%"></i></div></div><div class="barrow"><label>Reading <span>70%</span></label><div class="bar"><i style="width:70%"></i></div></div><div class="barrow"><label>Science <span>60%</span></label><div class="bar"><i style="width:60%"></i></div></div><div class="barrow"><label>Creativity <span>90%</span></label><div class="bar"><i style="width:90%"></i></div></div></div>
-      <div class="panel"><h3>⚙️ Personalize</h3><input class="input" id="nameInput" placeholder="Child's display name"><button class="save" onclick="saveName()">Save name</button><hr style="border:0;border-top:1px solid #eeeafa;margin:16px 0"><b>📸 Profile photo</b><input class="input" type="file" id="photoInput" accept="image/*"><button class="save" onclick="savePhoto()">Save photo</button> <button class="save" style="background:#8b8aa3" onclick="removePhoto()">Remove</button><p style="font-size:12px;color:#777">For privacy, this demo stores the display name and progress only in this browser.</p></div>
+      <div class="panel"><h3>📊 Website Controls</h3><p>Manage the editable content below. Viewer-facing editor controls are protected by Parent Admin.</p><div class="admin-grid">
+        <div class="admin-card"><h3>👧 Profile</h3><input class="input" id="nameInput" placeholder="Child's display name"><button class="save" onclick="saveName()">Save name</button><input class="input" type="file" id="photoInput" accept="image/*"><button class="save" onclick="savePhoto()">Save photo</button><button class="save" style="background:#8b8aa3" onclick="removePhoto()">Remove photo</button></div>
+        <div class="admin-card"><h3>🎁 Gift QR</h3><input class="input" type="file" id="qrInput" accept="image/*"><button class="save" onclick="saveQR()">Save QR Code</button><button class="save" style="background:#8b8aa3" onclick="removeQR()">Remove QR</button><textarea class="input" id="giftMessage" rows="4" maxlength="250" placeholder="Gift message"></textarea><button class="save" onclick="saveGiftMessage()">Save gift message</button></div>
+      </div></div>
+      <div class="panel"><h3>🛠️ Manage Website Areas</h3><div class="admin-grid">
+        <div class="admin-card"><b>📱 Social Links</b><p>Add, edit or remove social links.</p><button class="save" onclick="go('social')">Manage Social</button></div>
+        <div class="admin-card"><b>💖 6Y Memories</b><p>Manage Stuvi's memories and photos.</p><button class="save" onclick="go('memories')">Manage Memories</button></div>
+        <div class="admin-card"><b>🌱 Growing Up</b><p>Manage future dreams and growth content.</p><button class="save" onclick="go('growth')">Manage Growth</button></div>
+        <div class="admin-card"><b>🖼️ Gallery</b><p>Open the existing gallery and manage saved creations.</p><button class="save" onclick="go('gallery')">Open Gallery</button></div>
+      </div></div>
+      <div class="panel"><h3>⚙️ Admin Tools</h3><div class="admin-grid">
+        <div class="admin-card"><b>💾 Backup</b><p>Download a backup of the current website data.</p><button class="save" onclick="exportAdminData()">Export Backup</button></div>
+        <div class="admin-card"><b>📥 Restore</b><p>Restore a previously exported Stuvi backup.</p><input class="input" type="file" id="importAdminFile" accept="application/json"><button class="save" onclick="importAdminData()">Import Backup</button></div>
+        <div class="admin-card"><b>🧹 Reset</b><p>Reset all stored website data on this browser.</p><button class="save" style="background:#c43a68" onclick="resetAllData()">Reset Website Data</button></div>
+        <div class="admin-card"><b>🔐 Session</b><p>Parent access automatically locks when this page is refreshed.</p><button class="save" onclick="adminLogout()">Lock Now</button></div>
+      </div></div>
     </div>
   </div>
 </section>
@@ -243,7 +427,9 @@ main{max-width:1500px;margin:auto;padding:22px}
   <select class="input" id="pmRel"><option>Sibling</option><option>Aunt</option><option>Uncle</option><option>Cousin</option><option>Grandparent</option><option>Family friend</option><option>Other</option></select>
   <div class="btnrow"><button class="save" onclick="savePerson()">💾 Save</button><button class="save" id="pmRemove" style="background:#8b8aa3" onclick="removePerson()">Remove</button></div>
 </div></div>
-<div class="toast" id="toast"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="close" onclick="closeLightbox();event.stopPropagation()">×</button><img id="lightboxImg" alt="Gallery photo"></div>
+<div class="toast" id="toast"></div><button class="admin-lock" id="adminLock" title="Parent Admin Login" onclick="openParentLogin()">🔐</button>
+<div class="admin-modal" id="adminLoginModal"><div class="admin-modal-box"><h2>🔐 Parent Admin Login</h2><p>Enter the Parent Admin password to unlock private website controls.</p><input class="input" id="adminPasswordInput" type="password" autocomplete="current-password" placeholder="Parent password"><div class="admin-error" id="adminLoginError"></div><button class="save" onclick="verifyParentPassword()">Unlock Parent Admin</button> <button class="save" style="background:#8b8aa3" onclick="closeParentLogin()">Cancel</button></div></div>
 
 <script>
 const defaultBadges=[
@@ -272,8 +458,22 @@ const DRAW=[
 DRAW.forEach(c=>c.tasks=c.tasks.map((t,i)=>({id:c.id+i,text:t})));
 let drawCat='all';
 let state=(()=>{try{return JSON.parse(localStorage.getItem('learningUniverse')||'null')}catch(e){return null}})()||{
-  name:'Stuvi',xp:0,streak:1,badges:[],mission:0,recent:[],creations:[],birthday:[false,false,false,false,false,false,false]
+  name:'Stuvi',xp:0,streak:1,badges:[],mission:0,recent:[],creations:[],birthday:[false,false,false,false,false,false,false],
+  galleryPhotos:[],memories:[],socials:[],growthDreams:[],chatLang:'en',chatHistory:[],qrCode:'',giftMessage:''
 };
+state.galleryPhotos=state.galleryPhotos||[];state.memories=state.memories||[];state.socials=state.socials||[];
+state.growthDreams=state.growthDreams||[];state.chatLang=state.chatLang||'en';state.chatHistory=state.chatHistory||[];
+state.giftMessage=state.giftMessage||'';
+const PARENT_PASSWORD='Devrath@1234';
+let adminUnlocked=false;
+function openParentLogin(){document.getElementById('adminLoginModal').classList.add('show');document.getElementById('adminLoginError').textContent='';setTimeout(()=>document.getElementById('adminPasswordInput').focus(),50)}
+function closeParentLogin(){document.getElementById('adminLoginModal').classList.remove('show');document.getElementById('adminPasswordInput').value=''}
+function verifyParentPassword(){const v=document.getElementById('adminPasswordInput').value;if(v===PARENT_PASSWORD){adminUnlocked=true;document.body.classList.add('admin-auth');const pb=document.getElementById('parentNavBtn');if(pb)pb.style.display='inline-flex';closeParentLogin();go('parent');toast('🔓 Parent Admin unlocked')}else{document.getElementById('adminLoginError').textContent='Incorrect password. Please try again.'}}
+function requireAdmin(){if(!adminUnlocked){toast('🔒 Parent Admin access required');openParentLogin();return false}return true}
+function adminLogout(){adminUnlocked=false;document.body.classList.remove('admin-auth');const pb=document.getElementById('parentNavBtn');if(pb)pb.style.display='none';go('home');toast('🔐 Parent Admin locked')}
+function exportAdminData(){if(!requireAdmin())return;const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='stuvi-learning-universe-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function importAdminData(){if(!requireAdmin())return;const f=document.getElementById('importAdminFile').files[0];if(!f){toast('Choose a backup JSON file first');return}const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!data||typeof data!=='object')throw new Error();state={...state,...data};save();toast('📥 Backup restored')}catch(e){toast('Invalid Stuvi backup file')}};r.readAsText(f)}
+function resetAllData(){if(!requireAdmin())return;if(confirm('Reset all Stuvi website data stored in this browser?')){localStorage.removeItem('learningUniverse');location.reload()}}
 function save(){let ok=true;try{localStorage.setItem('learningUniverse',JSON.stringify(state))}catch(e){ok=false}render();return ok}
 function setPhotos(){
   [['avatarImg',state.photo||DEFAULT_AVATAR],['heroImg',state.photo||DEFAULT_PHOTO]].forEach(([id,src])=>{
@@ -432,7 +632,7 @@ function sendBlessingWA(){
   const text=`🙏 Blessing for ${state.name} from ${n}: ${m||'Sending you lots of love and blessings! 💖'}`;
   window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');
 }
-function savePhoto(){
+function savePhoto(){if(!requireAdmin())return;
   const f=document.getElementById('photoInput').files[0];
   if(!f){toast('Choose a photo first 📸');return}
   const r=new FileReader();
@@ -448,11 +648,124 @@ function savePhoto(){
     img.src=e.target.result};
   r.readAsDataURL(f);
 }
-function removePhoto(){delete state.photo;save();toast('Back to the original photo')}
+function removePhoto(){if(!requireAdmin())return;delete state.photo;save();toast('Back to the original photo')}
+
+const CHAT_TEXT={
+ en:{welcome:`Hi ${state.name}! 💖 I’m Stuvi Buddy. We can talk, learn, imagine stories and have fun together!`,hello:`Hello superstar! 🌟 How are you feeling today?`,learn:`Yay! 📚 Try this: name 3 things you can see around you, then tell me which one is your favourite.`,happy:`Here is a Stuvi smile for you: 😊✨ You are special, loved and full of wonderful ideas!`,story:`Once upon a time, ${state.name} found a tiny rainbow door. 🌈 Behind it was a library where every book could fly! 📚✨`,fallback:`That sounds lovely! 💕 Tell me more, or tap one of the buttons below.`},
+ hi:{welcome:`नमस्ते ${state.name}! 💖 मैं Stuvi Buddy हूँ। हम बातें कर सकते हैं, सीख सकते हैं और मज़ेदार कहानियाँ बना सकते हैं!`,hello:`हैलो सुपरस्टार! 🌟 आज तुम कैसी हो?`,learn:`वाह! 📚 एक छोटा खेल: अपने आसपास की 3 चीज़ों के नाम बताओ और अपनी पसंदीदा चीज़ चुनो।`,happy:`तुम्हारे लिए एक Stuvi smile 😊✨ याद रखो—तुम बहुत खास हो और तुम्हारे ideas बहुत सुंदर हैं!`,story:`एक बार ${state.name} को एक छोटी इंद्रधनुषी दरवाज़ा मिला। 🌈 उसके पीछे उड़ती हुई किताबों की जादुई लाइब्रेरी थी! 📚✨`,fallback:`बहुत अच्छा! 💕 मुझे और बताओ, या नीचे दिए बटन में से कुछ चुनो।`},
+ bn:{welcome:`হ্যালো ${state.name}! 💖 আমি Stuvi Buddy। আমরা কথা বলতে, শিখতে এবং মজার গল্প বানাতে পারি!`,hello:`হ্যালো সুপারস্টার! 🌟 আজ কেমন আছো?`,learn:`দারুণ! 📚 তোমার চারপাশে দেখা ৩টি জিনিসের নাম বলো এবং কোনটি তোমার সবচেয়ে পছন্দ তা বলো।`,happy:`তোমার জন্য Stuvi smile 😊✨ তুমি খুব বিশেষ এবং তোমার ভাবনাগুলো দারুণ!`,story:`একদিন ${state.name} একটি ছোট রংধনুর দরজা খুঁজে পেল। 🌈 তার ওপারে ছিল উড়ন্ত বইয়ের জাদুর লাইব্রেরি! 📚✨`,fallback:`দারুণ! 💕 আমাকে আরও বলো, অথবা নিচের একটি বোতাম বেছে নাও।`}
+};
+function currentLang(){return state.chatLang||'en'}
+function setChatLanguage(lang){state.chatLang=lang;save();chatWelcome(true)}
+function addChatMsg(who,text,store=true){
+  const box=document.getElementById('chatMessages');if(!box)return;
+  const div=document.createElement('div');div.className='msg '+(who==='stuvi'?'stuvi':'you');div.textContent=text;box.appendChild(div);box.scrollTop=box.scrollHeight;
+  if(store){state.chatHistory.push({who,text});state.chatHistory=state.chatHistory.slice(-30);try{localStorage.setItem('learningUniverse',JSON.stringify(state))}catch(e){}}
+}
+function chatWelcome(force=false){
+  const box=document.getElementById('chatMessages');if(!box)return;
+  box.innerHTML='';
+  const lang=currentLang(),t=CHAT_TEXT[lang];
+  if(!force && state.chatHistory.length){state.chatHistory.forEach(m=>addChatMsg(m.who,m.text,false));}
+  else addChatMsg('stuvi',t.welcome,true);
+  const sel=document.getElementById('chatLang');if(sel)sel.value=lang;
+}
+function replyFor(text){
+  const lang=currentLang(),t=CHAT_TEXT[lang],x=text.toLowerCase();
+  if(/hello|hi|hey|नमस्ते|हैलो|হ্যালো/.test(x))return t.hello;
+  if(/learn|study|math|सीख|पढ़|শিখ|পড়/.test(x))return t.learn;
+  if(/happy|sad|smile|खुश|उदास|হাসি|খুশি/.test(x))return t.happy;
+  if(/story|कहानी|গল্প/.test(x))return t.story;
+  return t.fallback;
+}
+function sendChat(){
+  const inp=document.getElementById('chatInput'),text=(inp.value||'').trim();if(!text)return;
+  addChatMsg('you',text);inp.value='';
+  setTimeout(()=>addChatMsg('stuvi',replyFor(text)),350);
+}
+function quickChat(key){const t=CHAT_TEXT[currentLang()];const map={hello:t.hello,learn:t.learn,happy:t.happy,story:t.story};addChatMsg('you',map[key]);setTimeout(()=>addChatMsg('stuvi',map[key]),300)}
+
+function compressImage(file,max=900,quality=.82){
+ return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const scale=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*scale));c.height=Math.max(1,Math.round(im.height*scale));c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',quality))};im.onerror=reject;im.src=e.target.result};r.onerror=reject;r.readAsDataURL(file)})
+}
+async function addGalleryPhotos(){
+ const inp=document.getElementById('galleryInput'),files=[...(inp.files||[])];if(!files.length){toast('Choose one or more photos 📸');return}
+ const caption=(document.getElementById('galleryCaption').value||'').trim();
+ for(const f of files){try{state.galleryPhotos.unshift({id:uid('gp'),src:await compressImage(f),caption,date:new Date().toLocaleDateString()})}catch(e){}}
+ state.galleryPhotos=state.galleryPhotos.slice(0,80);document.getElementById('galleryInput').value='';document.getElementById('galleryCaption').value='';save();toast('📸 Photos added to Stuvi’s Gallery!');
+}
+function renderGalleryPhotos(){
+ const box=document.getElementById('photoGallery');if(!box)return;
+ box.innerHTML=state.galleryPhotos.map(x=>`<div class="photo-card"><button class="del" onclick="deleteGalleryPhoto('${x.id}')">×</button><img src="${x.src}" alt="Stuvi memory" onclick="openLightbox('${x.src}')"><b>${escapeHtml(x.caption||'A beautiful Stuvi moment 💖')}</b><small style="display:block;color:#888">${x.date}</small></div>`).join('')||'<div class="panel">📸 Your photo gallery is ready. Add your first memory photo above!</div>';
+}
+function deleteGalleryPhoto(id){state.galleryPhotos=state.galleryPhotos.filter(x=>x.id!==id);save();toast('Photo removed')}
+function openLightbox(src){document.getElementById('lightboxImg').src=src;document.getElementById('lightbox').classList.add('show')}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show')}
+
+async function addMemory(){if(!requireAdmin())return;
+ const age=document.getElementById('memAge').value.trim(),title=document.getElementById('memTitle').value.trim(),story=document.getElementById('memStory').value.trim(),file=document.getElementById('memPhoto').files[0];
+ if(!title||!story){toast('Please add a title and memory story 💖');return}
+ let photo='';if(file)try{photo=await compressImage(file,800)}catch(e){}
+ state.memories.unshift({id:uid('m'),age:age||'A special year',title,story,photo,date:new Date().toLocaleDateString()});state.memories=state.memories.slice(0,100);
+ document.getElementById('memAge').value='';document.getElementById('memTitle').value='';document.getElementById('memStory').value='';document.getElementById('memPhoto').value='';save();toast('💖 Memory saved forever on this device!');
+}
+function renderMemories(){
+ const box=document.getElementById('memoryGrid');if(!box)return;
+ box.innerHTML=state.memories.map(x=>`<div class="memory-card">${x.photo?`<img src="${x.photo}" alt="Memory">`:''}<button class="del" onclick="deleteMemory('${x.id}')">×</button><span class="stuvi-badge">🎀 ${escapeHtml(x.age)}</span><h3>${escapeHtml(x.title)}</h3><p>${escapeHtml(x.story)}</p><small>${x.date}</small></div>`).join('')||'<div class="panel">🌸 Start Stuvi’s memory book with a favourite moment from her first six years.</div>';
+}
+function deleteMemory(id){if(!requireAdmin())return;state.memories=state.memories.filter(x=>x.id!==id);save()}
+
+const GROWTH_STAGES=[
+ ['Age 6','Little Explorer','Learn, play, ask lots of questions and discover new passions.','🧸'],
+ ['Age 8','Curious Creator','Build skills through reading, art, science, games and imagination.','🎨'],
+ ['Age 10','Brave Learner','Try new challenges, make projects and grow confidence.','🔬'],
+ ['Age 12','Big Ideas','Explore interests, friendships, creativity and personal goals.','💡'],
+ ['Age 15','Future Builder','Practice useful skills and discover what kind of work feels meaningful.','🚀'],
+ ['Age 18','Dream Chaser','Carry forward the values, memories and skills built along the way.','🌟']
+];
+function renderGrowth(){
+ const box=document.getElementById('growthTimeline');if(!box)return;
+ const src=state.photo||DEFAULT_PHOTO;
+ box.innerHTML=GROWTH_STAGES.map((x,i)=>`<div class="growth-stage" style="animation-delay:${i*.08}s"><img class="growth-avatar" src="${src}" alt="${x[0]} Stuvi"><div><div class="growth-age">${x[3]} ${x[0]}</div><h2 style="margin:4px 0">${x[1]}</h2><p>${x[2]}</p><span class="stuvi-badge">💖 Keep growing</span></div></div>`).join('');
+ document.getElementById('dreamList').innerHTML=(state.growthDreams||[]).map((d,i)=>`<span class="chip active">🌟 ${escapeHtml(d)} <button style="background:transparent;color:#fff" onclick="deleteDream(${i})">×</button></span>`).join('');
+}
+function saveGrowthDream(){if(!requireAdmin())return;const x=document.getElementById('growthDream').value.trim();if(!x)return;state.growthDreams.unshift(x);state.growthDreams=state.growthDreams.slice(0,20);document.getElementById('growthDream').value='';save();toast('🌟 Future dream added!')}
+function deleteDream(i){if(!requireAdmin())return;state.growthDreams.splice(i,1);save()}
+
+function addSocial(){if(!requireAdmin())return;
+ const name=document.getElementById('socialName').value.trim(),url=document.getElementById('socialUrl').value.trim();
+ if(!name||!/^https?:\/\//i.test(url)){toast('Add a platform and a full https:// link 🔗');return}
+ state.socials.unshift({id:uid('s'),name,url});state.socials=state.socials.slice(0,30);document.getElementById('socialName').value='';document.getElementById('socialUrl').value='';save();toast('📱 Social link added!')
+}
+function renderSocial(){
+ const box=document.getElementById('socialList');if(!box)return;
+ const icon=n=>/youtube/i.test(n)?'▶️':/instagram/i.test(n)?'📸':/facebook/i.test(n)?'🔵':/whatsapp/i.test(n)?'💬':'🔗';
+ box.innerHTML=state.socials.map(x=>`<div class="social-card"><div><span class="social-icon">${icon(x.name)}</span> <b>${escapeHtml(x.name)}</b></div><div class="btnrow"><a class="save" href="${escapeHtml(x.url)}" target="_blank" rel="noopener">Open ↗</a><button class="save" style="background:#8b8aa3" onclick="deleteSocial('${x.id}')">Delete</button></div></div>`).join('')||'<div class="panel">📱 Add Stuvi’s YouTube, Instagram or other social link here.</div>';
+}
+function deleteSocial(id){if(!requireAdmin())return;state.socials=state.socials.filter(x=>x.id!==id);save()}
+
+async function saveQR(){if(!requireAdmin())return;
+ const f=document.getElementById('qrInput').files[0];if(!f){toast('Choose your QR image first 📲');return}
+ try{state.qrCode=await compressImage(f,900,0.9);save();toast('🎁 QR code saved!')}catch(e){toast('Could not read that QR image')}
+}
+function removeQR(){if(!requireAdmin())return;state.qrCode='';save();toast('QR code removed')}
+function saveGiftMessage(){if(!requireAdmin())return;state.giftMessage=document.getElementById('giftMessage').value.trim();save();toast('💌 Gift message saved!')}
+function renderQR(){
+ const box=document.getElementById('qrDisplay');if(!box)return;
+ document.getElementById('giftMessage').value=state.giftMessage||'';
+ box.innerHTML=state.qrCode?`<img class="qr-preview" src="${state.qrCode}" alt="Gift QR code"><h3>💖 A Gift for Stuvi</h3><p>${escapeHtml(state.giftMessage||'Thank you for celebrating Stuvi and sending your love! 💕')}</p>`:'<div style="font-size:60px">🎁💖🎁</div><h3>Your QR code will appear here</h3><p>Upload it above to create Stuvi’s gift corner.</p>';
+ const h=document.getElementById('homeGiftCard'),hi=document.getElementById('homeGiftQR'),hm=document.getElementById('homeGiftMessage');if(h){h.classList.toggle('empty',!state.qrCode);if(state.qrCode){hi.src=state.qrCode;hm.textContent=state.giftMessage||'If you would like to send Stuvi a gift, you can use the QR code below. 💖';}}
+}
+
 function render(){
   setPhotos();
   renderDraw();
   renderFamily();
+  renderGalleryPhotos();
+  renderMemories();
+  renderGrowth();
+  renderSocial();
+  renderQR();
   document.getElementById('childNameDisplay').textContent=state.name;
   document.getElementById('birthdayName').textContent=state.name;
   document.getElementById('xp').textContent=state.xp;
@@ -474,9 +787,48 @@ function earn(xp,title,area,icon='⭐',badgeIndex=null){
   if(badgeIndex!==null && !state.badges.includes(badgeIndex)){state.badges.push(badgeIndex);toast('🏆 New badge unlocked!');}
   save();toast(`+${xp} XP — Great job! ⭐`);
 }
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});}
+function go(id){if(id==='parent'&&!adminUnlocked){openParentLogin();return}document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));const launcher=document.getElementById('stuviChatLauncher');if(launcher)launcher.style.display=id==='home'?'block':'none';const pop=document.getElementById('stuviChatPopup');if(pop&&id!=='home')pop.classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
 function startAdventure(){go(['math','story','science','creative'][Math.floor(Math.random()*4)]);toast('🚀 Adventure started!');}
+
+/* Floating Home Chatbot */
+function popupLang(){return state.chatLang||'en'}
+function popupReply(text){
+  const lang=popupLang(), t=CHAT_TEXT[lang], x=(text||'').toLowerCase();
+  if(/hello|hi|hey|नमस्ते|हैलो|হ্যালো/.test(x)) return t.hello;
+  if(/learn|study|math|science|school|सीख|पढ़|गणित|विज्ञान|শিখ|পড়|বিজ্ঞান/.test(x)) return t.learn;
+  if(/happy|sad|smile|love|খুশি|হাসি|खुश|उदास|प्यार/.test(x)) return t.happy;
+  if(/story|storytime|कहानी|গল্প/.test(x)) return t.story;
+  if(/who are you|who is stuvi|stuvi/.test(x)){
+    return lang==='hi'?`मैं ${state.name} की Stuvi Buddy हूँ! 👧💖 मैं सीखने, कहानियों और खुशियों में साथ देती हूँ।`:lang==='bn'?`আমি ${state.name}-এর Stuvi Buddy! 👧💖 আমি শেখা, গল্প আর আনন্দে তোমার সঙ্গী।`:`I’m ${state.name}’s Stuvi Buddy! 👧💖 I’m here for learning, stories and happy moments.`;
+  }
+  return t.fallback;
+}
+function popupAddMsg(who,text){
+  const box=document.getElementById('popupChatMessages'); if(!box)return;
+  const d=document.createElement('div'); d.className='popup-msg '+(who==='stuvi'?'stuvi':'you'); d.textContent=text; box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function popupWelcome(){
+  const box=document.getElementById('popupChatMessages'); if(!box)return; box.innerHTML='';
+  const lang=popupLang(), t=CHAT_TEXT[lang]; popupAddMsg('stuvi',t.welcome);
+  const sel=document.getElementById('popupChatLang'); if(sel)sel.value=lang;
+}
+function toggleStuviPopup(force){
+  const pop=document.getElementById('stuviChatPopup'); if(!pop)return;
+  const open=typeof force==='boolean'?force:!pop.classList.contains('open'); pop.classList.toggle('open',open);
+  if(open){popupWelcome();setTimeout(()=>document.getElementById('popupChatInput')?.focus(),80)}
+}
+function setPopupChatLanguage(lang){state.chatLang=lang;save();popupWelcome()}
+function sendPopupChat(){
+  const input=document.getElementById('popupChatInput'), text=(input.value||'').trim(); if(!text)return;
+  popupAddMsg('you',text); input.value='';
+  setTimeout(()=>popupAddMsg('stuvi',popupReply(text)),350);
+}
+function popupQuick(key){
+  const t=CHAT_TEXT[popupLang()], map={hello:t.hello,learn:t.learn,happy:t.happy,story:t.story};
+  popupAddMsg('you',map[key]); setTimeout(()=>popupAddMsg('stuvi',popupReply(map[key])),300);
+}
+
 function initMath(){
  const a=3+Math.floor(Math.random()*7),b=2+Math.floor(Math.random()*7),ans=a+b;
  document.getElementById('mathGame').innerHTML=`<h2>${a} + ${b} = ?</h2><div class="game-options">${[ans,ans+1,ans-2,ans+3].sort(()=>Math.random()-.5).map(v=>`<button class="answer" onclick="mathAnswer(${v},${ans})">${v}</button>`).join('')}</div><div id="mathResult"></div>`;
@@ -488,11 +840,12 @@ function saveCreation(){const n=document.getElementById('planetName').value.trim
 function explore(place,fact){document.getElementById('exploreResult').innerHTML=`<div class="result correct">🌍 <b>${place}:</b> ${fact}</div>`;earn(15,'World Explorer','Explorer World','🌍',6)}
 function moneyChoice(c){document.getElementById('moneyResult').innerHTML=c==='save'?'<div class="result correct">🐷 Great plan! Saving, spending and giving are all useful parts of money planning.</div>':'<div class="result wrong">That can be fun, but planning some saving first can help you reach a bigger goal.</div>';if(c==='save')earn(20,'Money Mission','Money Mansion','💰',7)}
 function superMission(c){const m={kind:'You made kindness your superpower!',brave:'Being brave means trying even when something feels new.',help:'Helping others is a real-life superpower.',gratitude:'Gratitude helps us notice the good things around us.'};document.getElementById('superResult').innerHTML=`<div class="result correct">❤️ ${m[c]} +20 XP</div>`;earn(20,'Super Me Mission','Super Me','❤️',5)}
-function saveName(){const n=document.getElementById('nameInput').value.trim();if(n){state.name=n;save();toast('Name updated! 💖')}}
+function saveName(){if(!requireAdmin())return;const n=document.getElementById('nameInput').value.trim();if(n){state.name=n;save();toast('Name updated! 💖')}}
 function birthdayMode(){document.getElementById('birthdayModal').classList.add('show');document.getElementById('birthdayMissions').innerHTML=state.birthday.map((done,i)=>`<div class="mission"><b>Mission ${i+1}</b> — ${['Say 3 things you love about yourself','Solve a birthday riddle','Draw your dream cake','Do a secret kindness','Name 5 things you want to learn','Tell a family member a happy memory','Take your Birthday Hero oath'][i]} ${done?'✅':'<button class="save" style="float:right" onclick="birthdayMission('+i+')">Complete</button>'}</div>`).join('')+`<p style="text-align:center;font-weight:900">${state.birthday.filter(Boolean).length}/7 missions complete</p>`}
 function closeBirthday(){document.getElementById('birthdayModal').classList.remove('show')}
 function birthdayMission(i){if(!state.birthday[i]){state.birthday[i]=true;state.xp+=25;if(state.birthday.every(Boolean)){state.badges.push(8);toast('🎂 Birthday Hero badge unlocked!')}save();birthdayMode()}}
-function init(){render();initMath();document.getElementById('storyText').innerHTML=`Tonight, <b>${escapeHtml(state.name)}</b> notices a tiny glowing star outside the window. It whispers: “The Birthday Treasure is hidden somewhere in the Learning Universe!” ⭐`;document.getElementById('nameInput').value=state.name}
+function init(){adminUnlocked=false;document.body.classList.remove('admin-auth');const pb=document.getElementById('parentNavBtn');if(pb)pb.style.display='none';render();initMath();document.getElementById('popupChatAvatar').src=state.photo||'';document.getElementById('storyText').innerHTML=`Tonight, <b>${escapeHtml(state.name)}</b> notices a tiny glowing star outside the window. It whispers: “The Birthday Treasure is hidden somewhere in the Learning Universe!” ⭐`;document.getElementById('nameInput').value=state.name;chatWelcome(false);const ci=document.getElementById('chatInput');if(ci)ci.addEventListener('keydown',e=>{if(e.key==='Enter')sendChat()});const pi=document.getElementById('popupChatInput');if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')sendPopupChat()});const launcher=document.getElementById('stuviChatLauncher');if(launcher)launcher.style.display='block';}
+document.addEventListener('keydown',e=>{if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='p'){e.preventDefault();openParentLogin()}});
 init();
 </script>
 </body>
