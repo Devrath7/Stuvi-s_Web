@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Stuvi's Learning Universe</title>
 <style>
 :root{
@@ -10,9 +11,10 @@
   --yellow:#ffd45c;--green:#70c94b;--ink:#20234a;--bg:#f7f6ff;--card:#fff;
   --shadow:0 12px 35px rgba(49,37,111,.12);--radius:24px;
 }
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}
 button,input{font:inherit}button{border:0;cursor:pointer}
-.topbar{position:sticky;top:0;z-index:20;background:linear-gradient(100deg,#11174b,#24205f);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:18px;box-shadow:0 6px 25px #10143c33}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(100deg,#11174b,#24205f);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:18px;box-shadow:0 6px 25px #10143c33}
 .logo{font-weight:900;font-size:20px;min-width:190px;display:flex;align-items:center;gap:7px}.logo span{color:#ffd45c}
 .nav{display:flex;gap:5px;flex:1;overflow:auto}.nav button{color:#fff;background:transparent;padding:10px 12px;border-radius:14px;white-space:nowrap;font-weight:700;font-size:13px}.nav button.active,.nav button:hover{background:#ffffff1d}
 .avatar{width:43px;height:43px;border-radius:50%;object-fit:cover;border:3px solid #fff}
@@ -35,10 +37,29 @@ main{max-width:1500px;margin:auto;padding:22px}
 .birthday{background:radial-gradient(circle at 20% 10%,#fff7b8,transparent 18%),linear-gradient(135deg,#5b36d7,#e84d9d);color:#fff;border-radius:30px;padding:35px;position:relative;overflow:hidden}.birthday h1{font-size:48px;margin:5px 0}.birthday .confetti{font-size:38px;letter-spacing:12px}.mission{background:#ffffff18;border:1px solid #ffffff30;padding:15px;border-radius:18px;margin:10px 0}
 .dashboard{display:grid;grid-template-columns:1fr 1fr;gap:16px}.big-number{font-size:44px;font-weight:950;color:#6943df}.barrow{margin:15px 0}.barrow label{display:flex;justify-content:space-between;font-weight:800}.bar{height:12px;background:#eeeef5;border-radius:20px}.bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#7147e8,#ff5da8)}
 .modal{position:fixed;inset:0;background:#11174b99;display:none;align-items:center;justify-content:center;z-index:50;padding:18px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:26px;max-width:620px;width:100%;padding:25px;box-shadow:0 25px 70px #0004}.close{float:right;background:#f0eff7;width:35px;height:35px;border-radius:50%}.input{width:100%;padding:14px;border:2px solid #e7e4f2;border-radius:15px;margin:8px 0}.save{background:#7147e8;color:#fff;padding:12px 20px;border-radius:15px;font-weight:900}
-.toast{position:fixed;right:20px;bottom:20px;background:#20204d;color:#fff;padding:15px 19px;border-radius:17px;box-shadow:var(--shadow);display:none;z-index:60}.toast.show{display:block;animation:pop .25s ease}
+.toast{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#20204d;color:#fff;padding:15px 19px;border-radius:17px;box-shadow:var(--shadow);display:none;z-index:60}.toast.show{display:block;animation:pop .25s ease}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.chip{background:#f2efff;color:var(--ink);padding:9px 14px;border-radius:20px;font-weight:800;font-size:13px}.chip.active{background:var(--purple);color:#fff}
 .task{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #eeeafa;border-radius:16px;margin:8px 0;cursor:pointer;font-weight:650;background:#fff}.task:hover{background:#faf8ff}.task input{width:22px;height:22px;accent-color:#7147e8;flex:none}.task span{flex:1}.task small{color:#8b8aa3;font-weight:800;white-space:nowrap}.task.done{background:#e7f8e7;border-color:#cdeccd}.task.done span{text-decoration:line-through;color:#4d7a58}
 .surprise{background:linear-gradient(135deg,#fff7b8,#ffe0f0);padding:16px;border-radius:18px;margin-top:14px;font-weight:800}.surprise:empty{display:none}
+.tree{display:flex;flex-direction:column;align-items:center;margin:20px 0 6px;--line:#cbbcf7}
+.tree-sides{display:grid;grid-template-columns:1fr 1fr;align-items:end;width:100%;max-width:820px}
+.tree-col{display:flex;flex-direction:column;align-items:center}.tree-col h4{margin:0 0 10px;font-size:12px;color:#8b8aa3;text-transform:uppercase;letter-spacing:.6px}
+.tree-pair{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.vline{width:2px;height:24px;background:var(--line)}
+.tree-join{position:relative;height:36px;width:100%;max-width:820px}
+.tree-join:before{content:"";position:absolute;left:25%;right:25%;top:0;bottom:50%;border:2px solid var(--line);border-top:0;border-radius:0 0 14px 14px}
+.tree-join:after{content:"";position:absolute;left:50%;top:50%;bottom:0;margin-left:-1px;border-left:2px solid var(--line)}
+.tree-kids{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.tnode{background:#fff;border:2px solid #e7e0ff;border-radius:18px;padding:10px 12px;min-width:125px;max-width:160px;text-align:center;box-shadow:0 6px 18px #6240dc14;cursor:pointer;transition:.2s}.tnode:hover{transform:translateY(-3px);border-color:#a48cf5}
+.tnode .tav{font-size:30px;line-height:1.2}.tnode .trole{font-size:11px;color:#8b8aa3;font-weight:800}.tnode .tname{font-weight:900;font-size:14px;word-break:break-word}
+.tnode.empty{border-style:dashed}.tnode.empty .tname{color:#b3b0c9;font-weight:700}
+.tnode.me{background:linear-gradient(135deg,#7147e8,#ff5da8);color:#fff;border-color:transparent;cursor:default}.tnode.me:hover{transform:none}.tnode.me .trole{color:#ffffffcc}
+.tphoto{width:58px;height:58px;border-radius:50%;object-fit:cover;border:3px solid #fff;display:block;margin:0 auto 2px}
+.relgrid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}.relchip{background:#f6f2ff;border:1px solid #e7e0ff;border-radius:16px;padding:10px 14px;cursor:pointer;font-weight:700}.relchip small{color:#8b8aa3;margin-left:4px}.relchip:hover{background:#ece5ff}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}.wa{background:#1faa59;color:#fff;padding:12px 20px;border-radius:15px;font-weight:900}
+.bless-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:18px}
+.bless{background:linear-gradient(135deg,#fff7fb,#f6efff);border:1px solid #eeeafa;border-radius:18px;padding:14px 34px 14px 14px;position:relative}.bless b{display:block;font-size:15px}.bless p{margin:6px 0 8px;line-height:1.5}.bless small{color:#8b8aa3}
+.bless .x{position:absolute;right:8px;top:8px;background:#f0eff7;width:24px;height:24px;border-radius:50%;font-size:12px}
+@media(max-width:700px){.tnode{min-width:108px;padding:8px}}
 @keyframes pop{from{transform:translateY(15px);opacity:0}to{transform:none;opacity:1}}@keyframes float{50%{transform:translateY(-8px)}}.float{animation:float 3s ease-in-out infinite}
 @media(max-width:1100px){.worlds{grid-template-columns:repeat(4,1fr)}.hero{grid-template-columns:1fr 1.4fr}.side{display:none}.bottomgrid{grid-template-columns:1fr 1fr}.hero h1{font-size:42px}}
 @media(max-width:700px){.topbar{flex-wrap:wrap}.logo{min-width:auto}.nav{order:3;flex-basis:100%}main{padding:12px}.hero{grid-template-columns:1fr;}.hero-photo{height:330px}.hero-photo:after{background:linear-gradient(0deg,#eafcff,transparent 45%)}.hero-copy{padding:28px 20px}.hero h1{font-size:38px}.worlds{grid-template-columns:repeat(2,1fr)}.bottomgrid,.dashboard{grid-template-columns:1fr}.game-options{grid-template-columns:1fr}}
@@ -52,7 +73,7 @@ main{max-width:1500px;margin:auto;padding:22px}
     <button data-page="math">🧮 Math</button><button data-page="story">📚 Stories</button>
     <button data-page="science">🔬 Science</button><button data-page="creative">🎨 Create</button><button data-page="drawing">✏️ Draw</button>
     <button data-page="explore">🌍 Explore</button><button data-page="money">💰 Money</button>
-    <button data-page="super">❤️ Super Me</button><button data-page="gallery">🖼️ Gallery</button>
+    <button data-page="super">❤️ Super Me</button><button data-page="family">🌳 Family</button><button data-page="gallery">🖼️ Gallery</button>
     <button data-page="parent">🔒 Parent</button>
   </nav>
   <img class="avatar" id="avatarImg" alt="Profile photo">
@@ -63,7 +84,7 @@ main{max-width:1500px;margin:auto;padding:22px}
   <div class="hero">
     <div class="hero-photo"><img id="heroImg" alt="Birthday girl"></div>
     <div class="hero-copy">
-      <div class="kicker">👑 LEVEL 6 UNLOCKED</div>
+      <div class="kicker">👑 LEVEL 7 UNLOCKED</div>
       <h1>Hi <span id="childNameDisplay">Stuvi</span>!</h1>
       <p>Welcome, STUVI, to her Learning Universe — a magical place to learn, play, create, and discover something amazing every day! 💖</p>
       <div class="stats">
@@ -109,7 +130,7 @@ main{max-width:1500px;margin:auto;padding:22px}
 </section>
 
 <section id="story" class="page">
-  <div class="game-card"><h1>📚 Story Galaxy</h1><div class="story" id="storyText"></div><h3>What should Stuvi do next?</h3><div class="game-options"><button class="answer" onclick="storyChoice('castle')">🏰 Enter the rainbow castle</button><button class="answer" onclick="storyChoice('forest')">🌳 Follow the glowing forest path</button></div><div id="storyResult"></div></div>
+  <div class="game-card"><h1>📚 Story Galaxy</h1><div class="story" id="storyText"></div><h3>What should our hero do next?</h3><div class="game-options"><button class="answer" onclick="storyChoice('castle')">🏰 Enter the rainbow castle</button><button class="answer" onclick="storyChoice('forest')">🌳 Follow the glowing forest path</button></div><div id="storyResult"></div></div>
 </section>
 
 <section id="science" class="page">
@@ -128,7 +149,7 @@ main{max-width:1500px;margin:auto;padding:22px}
   <div class="game-card" style="max-width:1000px">
     <h1>✏️ Drawing Studio</h1>
     <p>Grab your paper, pencils and colours! Pick a task, draw it, then tick it off to earn <b>10 XP</b>. Finish a whole group for a <b>30 XP bonus</b>. 🌟</p>
-    <div class="panel" style="margin-top:16px"><h3>🖍️ Stuvi's Drawing Journey</h3>
+    <div class="panel" style="margin-top:16px"><h3>🖍️ My Drawing Journey</h3>
       <div style="display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px"><span><span id="drawCount">0</span> of <span id="drawTotal">0</span> drawings done</span><span id="drawPct">0%</span></div>
       <div class="progress"><i id="drawBar" style="width:0%"></i></div>
     </div>
@@ -165,6 +186,32 @@ main{max-width:1500px;margin:auto;padding:22px}
   </div><div id="superResult"></div></div>
 </section>
 
+<section id="family" class="page">
+  <div class="game-card" style="max-width:1000px">
+    <h1>🌳 My Family Tree</h1>
+    <p>Tap any card to add a name. Every family is special and every branch is loved! 💖</p>
+    <div id="treeBox"></div>
+    <div class="panel" style="margin-top:14px"><h3>🌟 More Family &amp; Friends</h3>
+      <div class="relgrid" id="relList"></div>
+      <button class="save" onclick="openRelative(null)">➕ Add a family member</button>
+    </div>
+  </div>
+
+  <div class="game-card" style="max-width:1000px">
+    <h1>🙏 Birthday Blessings</h1>
+    <p>Family and friends, please leave your name and a blessing for <b id="blessFor">Stuvi</b>! 💖</p>
+    <input class="input" id="blName" maxlength="40" placeholder="Your name">
+    <input class="input" id="blMsg" maxlength="200" placeholder="Your blessing or wish (optional)">
+    <div class="btnrow">
+      <button class="save" onclick="addBlessing()">🙏 Add my blessing</button>
+      <button class="wa" onclick="sendBlessingWA()">💬 Send on WhatsApp</button>
+    </div>
+    <p style="font-size:12px;color:#777">🔒 Blessings on the wall are saved only on this device. Nothing is sent anywhere unless you tap “Send on WhatsApp”.</p>
+    <h3 style="margin-top:22px">💌 Blessings Wall <small id="blessCount" style="color:#8b8aa3">0 blessings</small></h3>
+    <div class="bless-grid" id="blessList"></div>
+  </div>
+</section>
+
 <section id="gallery" class="page">
   <div class="game-card"><h1>🖼️ My Gallery</h1><p>Your saved creations appear here on this device.</p><div id="galleryList"></div></div>
 </section>
@@ -184,6 +231,13 @@ main{max-width:1500px;margin:auto;padding:22px}
 </main>
 
 <div class="modal" id="birthdayModal"><div class="modalbox"><button class="close" onclick="closeBirthday()">×</button><div style="text-align:center"><div style="font-size:60px">🎂✨👑</div><h1 style="color:#6b45df">LEVEL 7 UNLOCKED!</h1><p style="font-size:20px">Happy Birthday, <b id="birthdayName">My Star</b>!</p><p>Today you have 7 magical missions. Complete them to earn your Birthday Hero badge.</p></div><div id="birthdayMissions"></div></div></div>
+<div class="modal" id="personModal"><div class="modalbox">
+  <button class="close" onclick="closePerson()">×</button>
+  <h2 id="pmTitle" style="margin-top:0">Add a name</h2>
+  <input class="input" id="pmName" maxlength="40" placeholder="Type a name">
+  <select class="input" id="pmRel"><option>Sibling</option><option>Aunt</option><option>Uncle</option><option>Cousin</option><option>Grandparent</option><option>Family friend</option><option>Other</option></select>
+  <div class="btnrow"><button class="save" onclick="savePerson()">💾 Save</button><button class="save" id="pmRemove" style="background:#8b8aa3" onclick="removePerson()">Remove</button></div>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -212,10 +266,10 @@ const DRAW=[
 ];
 DRAW.forEach(c=>c.tasks=c.tasks.map((t,i)=>({id:c.id+i,text:t})));
 let drawCat='all';
-let state=JSON.parse(localStorage.getItem('learningUniverse')||'null')||{
+let state=(()=>{try{return JSON.parse(localStorage.getItem('learningUniverse')||'null')}catch(e){return null}})()||{
   name:'Stuvi',xp:0,streak:1,badges:[],mission:0,recent:[],creations:[],birthday:[false,false,false,false,false,false,false]
 };
-function save(){localStorage.setItem('learningUniverse',JSON.stringify(state));render();}
+function save(){let ok=true;try{localStorage.setItem('learningUniverse',JSON.stringify(state))}catch(e){ok=false}render();return ok}
 function setPhotos(){
   [['avatarImg',state.photo||DEFAULT_AVATAR],['heroImg',state.photo||DEFAULT_PHOTO]].forEach(([id,src])=>{
     const im=document.getElementById(id);
@@ -266,6 +320,85 @@ function drawSurprise(){
   const t=left[Math.floor(Math.random()*left.length)];
   box.innerHTML=`🎲 Your task: <b>${escapeHtml(t.text)}</b> <span style="color:#8b8aa3">(${t.cat.icon} ${t.cat.name})</span>`;
 }
+const REL_EMOJI={'Sibling':'🧒','Aunt':'👩','Uncle':'👨','Cousin':'🧑','Grandparent':'🧓','Family friend':'🤝','Other':'🌟'};
+let pmTarget=null;
+function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function tnode(slot,role,emoji){
+  const n=(state.family||{})[slot];
+  return `<div class="tnode ${n?'':'empty'}" onclick="openSlot('${slot}','${role}')"><div class="tav">${emoji}</div><div class="trole">${role}</div><div class="tname">${n?escapeHtml(n):'+ Add name'}</div></div>`;
+}
+function renderFamily(){
+  const rels=state.relatives||[],sibs=rels.filter(r=>r.rel==='Sibling'),others=rels.filter(r=>r.rel!=='Sibling');
+  document.getElementById('blessFor').textContent=state.name;
+  document.getElementById('treeBox').innerHTML=`<div class="tree">
+    <div class="tree-sides">
+      <div class="tree-col"><h4>Father's side</h4><div class="tree-pair">${tnode('gp_pf','Grandfather','👴')}${tnode('gp_pm','Grandmother','👵')}</div><div class="vline"></div>${tnode('dad','Father','👨')}</div>
+      <div class="tree-col"><h4>Mother's side</h4><div class="tree-pair">${tnode('gp_mf','Grandfather','👴')}${tnode('gp_mm','Grandmother','👵')}</div><div class="vline"></div>${tnode('mom','Mother','👩')}</div>
+    </div>
+    <div class="tree-join"></div>
+    <div class="tree-kids">
+      <div class="tnode me"><img class="tphoto" src="${state.photo||DEFAULT_AVATAR}" alt=""><div class="trole">Me</div><div class="tname">${escapeHtml(state.name)}</div></div>
+      ${sibs.map(r=>`<div class="tnode" onclick="openRelative('${r.id}')"><div class="tav">🧒</div><div class="trole">Sibling</div><div class="tname">${escapeHtml(r.name)}</div></div>`).join('')}
+      <div class="tnode empty" onclick="openRelative(null,'Sibling')"><div class="tav">➕</div><div class="tname">Add sibling</div></div>
+    </div></div>`;
+  document.getElementById('relList').innerHTML=others.map(r=>`<div class="relchip" onclick="openRelative('${r.id}')">${REL_EMOJI[r.rel]||'🌟'} <b>${escapeHtml(r.name)}</b><small>${escapeHtml(r.rel)}</small></div>`).join('')||'<p style="color:#8b8aa3;margin:0 0 12px">No one added yet. Tap “Add a family member”.</p>';
+  const b=state.blessings||[];
+  document.getElementById('blessCount').textContent=b.length+(b.length===1?' blessing':' blessings');
+  document.getElementById('blessList').innerHTML=b.map(x=>`<div class="bless"><button class="x" onclick="removeBlessing('${x.id}')" aria-label="Remove">✕</button><b>🙏 ${escapeHtml(x.name)}</b><p>${escapeHtml(x.msg)}</p><small>${escapeHtml(x.date)}</small></div>`).join('')||'<p style="color:#8b8aa3">Be the first to leave a blessing! 💖</p>';
+}
+function openModal(){document.getElementById('personModal').classList.add('show');setTimeout(()=>document.getElementById('pmName').focus(),50)}
+function closePerson(){document.getElementById('personModal').classList.remove('show')}
+function openSlot(id,role){
+  pmTarget={type:'slot',id};
+  const cur=(state.family||{})[id]||'';
+  document.getElementById('pmTitle').textContent=(cur?'Edit ':'Add ')+role;
+  document.getElementById('pmName').value=cur;
+  document.getElementById('pmRel').style.display='none';
+  document.getElementById('pmRemove').style.display=cur?'':'none';
+  openModal();
+}
+function openRelative(id,preset){
+  pmTarget={type:'rel',id:id||null};
+  const r=id?(state.relatives||[]).find(x=>x.id===id):null;
+  document.getElementById('pmTitle').textContent=r?'Edit family member':'Add a family member';
+  document.getElementById('pmName').value=r?r.name:'';
+  const sel=document.getElementById('pmRel');sel.style.display='';sel.value=r?r.rel:(preset||'Cousin');
+  document.getElementById('pmRemove').style.display=r?'':'none';
+  openModal();
+}
+function savePerson(){
+  const name=document.getElementById('pmName').value.trim();
+  if(!name||!pmTarget){toast('Please type a name 💜');return}
+  if(pmTarget.type==='slot'){state.family=state.family||{};state.family[pmTarget.id]=name}
+  else{
+    state.relatives=state.relatives||[];const rel=document.getElementById('pmRel').value;
+    const r=pmTarget.id&&state.relatives.find(x=>x.id===pmTarget.id);
+    if(r){r.name=name;r.rel=rel}else state.relatives.push({id:uid('r'),name,rel});
+  }
+  closePerson();save();toast('🌳 Family tree updated!');
+}
+function removePerson(){
+  if(!pmTarget)return;
+  if(pmTarget.type==='slot'){if(state.family)delete state.family[pmTarget.id]}
+  else state.relatives=(state.relatives||[]).filter(x=>x.id!==pmTarget.id);
+  closePerson();save();
+}
+function addBlessing(){
+  const n=document.getElementById('blName').value.trim(),m=document.getElementById('blMsg').value.trim();
+  if(!n){toast('Please type your name 💜');return}
+  state.blessings=state.blessings||[];
+  state.blessings.unshift({id:uid('b'),name:n,msg:m||'Sending you lots of love and blessings! 💖',date:new Date().toLocaleDateString()});
+  state.blessings=state.blessings.slice(0,200);
+  document.getElementById('blName').value='';document.getElementById('blMsg').value='';
+  save();toast('🙏 Thank you for your blessing!');
+}
+function removeBlessing(id){state.blessings=(state.blessings||[]).filter(x=>x.id!==id);save()}
+function sendBlessingWA(){
+  const n=document.getElementById('blName').value.trim(),m=document.getElementById('blMsg').value.trim();
+  if(!n){toast('Please type your name first 💜');return}
+  const text=`🙏 Blessing for ${state.name} from ${n}: ${m||'Sending you lots of love and blessings! 💖'}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener');
+}
 function savePhoto(){
   const f=document.getElementById('photoInput').files[0];
   if(!f){toast('Choose a photo first 📸');return}
@@ -276,7 +409,7 @@ function savePhoto(){
       c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
       c.getContext('2d').drawImage(img,0,0,c.width,c.height);
       const old=state.photo;state.photo=c.toDataURL('image/jpeg',.85);
-      try{save();toast('Photo saved! 📸')}catch(err){state.photo=old;toast('Photo too large to save')}
+      if(save())toast('Photo saved! 📸');else{state.photo=old;render();toast('Could not save the photo on this device')}
     };
     img.onerror=()=>toast('Could not read that image');
     img.src=e.target.result};
@@ -286,6 +419,7 @@ function removePhoto(){delete state.photo;save();toast('Back to the original pho
 function render(){
   setPhotos();
   renderDraw();
+  renderFamily();
   document.getElementById('childNameDisplay').textContent=state.name;
   document.getElementById('birthdayName').textContent=state.name;
   document.getElementById('xp').textContent=state.xp;
@@ -322,7 +456,7 @@ function explore(place,fact){document.getElementById('exploreResult').innerHTML=
 function moneyChoice(c){document.getElementById('moneyResult').innerHTML=c==='save'?'<div class="result correct">🐷 Great plan! Saving, spending and giving are all useful parts of money planning.</div>':'<div class="result wrong">That can be fun, but planning some saving first can help you reach a bigger goal.</div>';if(c==='save')earn(20,'Money Mission','Money Mansion','💰',7)}
 function superMission(c){const m={kind:'You made kindness your superpower!',brave:'Being brave means trying even when something feels new.',help:'Helping others is a real-life superpower.',gratitude:'Gratitude helps us notice the good things around us.'};document.getElementById('superResult').innerHTML=`<div class="result correct">❤️ ${m[c]} +20 XP</div>`;earn(20,'Super Me Mission','Super Me','❤️',5)}
 function saveName(){const n=document.getElementById('nameInput').value.trim();if(n){state.name=n;save();toast('Name updated! 💖')}}
-function birthdayMode(){document.getElementById('birthdayModal').classList.add('show');document.getElementById('birthdayMissions').innerHTML=state.birthday.map((done,i)=>`<div class="mission"><b>Mission ${i+1}</b> — ${['Say 3 things you love about yourself','Solve a birthday riddle','Draw your dream cake','Do a secret kindness','Name 5 things you want to learn','Tell a family member a happy memory','Take your Birthday oath'][i]} ${done?'✅':'<button class="save" style="float:right" onclick="birthdayMission('+i+')">Complete</button>'}</div>`).join('')+`<p style="text-align:center;font-weight:900">${state.birthday.filter(Boolean).length}/7 missions complete</p>`}
+function birthdayMode(){document.getElementById('birthdayModal').classList.add('show');document.getElementById('birthdayMissions').innerHTML=state.birthday.map((done,i)=>`<div class="mission"><b>Mission ${i+1}</b> — ${['Say 3 things you love about yourself','Solve a birthday riddle','Draw your dream cake','Do a secret kindness','Name 5 things you want to learn','Tell a family member a happy memory','Take your Birthday Hero oath'][i]} ${done?'✅':'<button class="save" style="float:right" onclick="birthdayMission('+i+')">Complete</button>'}</div>`).join('')+`<p style="text-align:center;font-weight:900">${state.birthday.filter(Boolean).length}/7 missions complete</p>`}
 function closeBirthday(){document.getElementById('birthdayModal').classList.remove('show')}
 function birthdayMission(i){if(!state.birthday[i]){state.birthday[i]=true;state.xp+=25;if(state.birthday.every(Boolean)){state.badges.push(8);toast('🎂 Birthday Hero badge unlocked!')}save();birthdayMode()}}
 function init(){render();initMath();document.getElementById('storyText').innerHTML=`Tonight, <b>${escapeHtml(state.name)}</b> notices a tiny glowing star outside the window. It whispers: “The Birthday Treasure is hidden somewhere in the Learning Universe!” ⭐`;document.getElementById('nameInput').value=state.name}
