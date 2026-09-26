@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Stuvi's Dress-Up Studio</title>
+<style>
+  :root{
+    --ink:#3a2e50;
+    --panel:#ffffff;
+    --accent:#ff6f91;
+    --accent2:#ffd93d;
+    --accent3:#7ec8e3;
+    --bg1:#ffe3ef;
+    --bg2:#e3f4ff;
+  }
+  html[data-theme] body{}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2));
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    overflow:hidden;
+  }
+  #app{
+    height:100%; display:flex; flex-direction:column; max-width:520px; margin:0 auto;
+  }
+  header{
+    text-align:center; padding:10px 12px 4px;
+  }
+  header h1{
+    margin:0; font-size:clamp(20px,6vw,28px); color:var(--accent);
+    text-shadow:1px 1px 0 #fff;
+  }
+  header p{ margin:2px 0 0; font-size:12.5px; opacity:.75; }
+
+  #stage{
+    flex:1 1 auto; min-height:0; position:relative;
+    display:flex; align-items:center; justify-content:center;
+    margin:6px 12px; border-radius:24px; overflow:hidden;
+    box-shadow:inset 0 0 0 3px #ffffffaa;
+    transition:background 0.4s;
+  }
+  #stage svg{ height:100%; max-height:340px; width:auto; filter:drop-shadow(0 8px 10px #00000022); }
+
+  .stagebtn{
+    position:absolute; top:10px; border:none; border-radius:14px;
+    padding:8px 12px; font-weight:800; font-size:13px; cursor:pointer;
+    background:#ffffffdd; color:var(--ink); box-shadow:0 3px 0 #00000022;
+  }
+  .stagebtn:active{ transform:translateY(2px); box-shadow:none; }
+  #surpriseBtn{ left:10px; }
+  #saveBtn{ right:10px; background:var(--accent2); color:#5a4200; }
+
+  #galleryStrip{
+    display:flex; gap:8px; padding:4px 12px; overflow-x:auto; min-height:0;
+  }
+  #galleryStrip .thumb{
+    flex:0 0 auto; width:44px; height:44px; border-radius:10px;
+    background:#fff; border:2px solid #ffffff; box-shadow:0 2px 0 #00000022;
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  #galleryStrip .thumb svg{ width:34px; height:34px; }
+  #galleryStrip .thumb button{
+    position:absolute; top:-6px; right:-6px; width:16px; height:16px; border-radius:50%;
+    border:none; background:#ff6f91; color:#fff; font-size:10px; line-height:16px; padding:0; cursor:pointer;
+  }
+  #galleryEmpty{ font-size:11px; opacity:.55; padding:4px 4px; }
+
+  nav#tabs{
+    display:flex; gap:4px; padding:6px 10px 0; flex:0 0 auto;
+  }
+  nav#tabs button{
+    flex:1; border:none; padding:9px 4px; border-radius:14px 14px 0 0;
+    background:#ffffff88; font-weight:800; font-size:12.5px; color:var(--ink); cursor:pointer;
+  }
+  nav#tabs button.active{ background:var(--panel); }
+
+  #panel{
+    background:var(--panel); padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));
+    border-radius:0 0 0 0; flex:0 0 auto;
+  }
+  .row{
+    display:flex; gap:8px; overflow-x:auto; padding:4px 0 2px;
+  }
+  .swatch{
+    flex:0 0 auto; width:36px; height:36px; border-radius:50%;
+    border:3px solid #fff; box-shadow:0 0 0 2px #00000014; cursor:pointer;
+  }
+  .swatch.selected{ box-shadow:0 0 0 3px var(--ink); }
+  .opt{
+    flex:0 0 auto; min-width:64px; padding:8px 10px; border-radius:12px;
+    background:#f3f0fa; border:2px solid transparent; font-weight:700; font-size:12px;
+    text-align:center; cursor:pointer; color:var(--ink);
+  }
+  .opt.selected{ border-color:var(--accent); background:#ffe1ea; }
+  label.sub{ font-size:11px; font-weight:800; opacity:.6; padding:0 2px; text-transform:uppercase; letter-spacing:.03em;}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Stuvi's Dress-Up Studio</h1>
+    <p>Mix hair, outfits &amp; accessories to design a new look!</p>
+  </header>
+
+  <div id="stage">
+    <button class="stagebtn" id="surpriseBtn">🎲 Surprise Me</button>
+    <button class="stagebtn" id="saveBtn">💾 Save Look</button>
+    <svg id="doll" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div id="galleryStrip"><span id="galleryEmpty">Saved looks will appear here ⭐</span></div>
+
+  <nav id="tabs">
+    <button data-tab="hair" class="active">💇 Hair</button>
+    <button data-tab="outfit">👗 Outfit</button>
+    <button data-tab="face">✨ Extras</button>
+    <button data-tab="scene">🌈 Scene</button>
+  </nav>
+  <div id="panel"></div>
+</div>
+
+<script>
+(function(){
+  const state = {
+    hairStyle: 'buns',
+    hairColor: '#4a2f22',
+    outfit: 'dress1',
+    outfitColor: '#ff6f91',
+    accessory: 'none',
+    accColor: '#ffd93d',
+    scene: 'sky'
+  };
+
+  const HAIR_COLORS = ['#4a2f22','#1b1b1b','#c98b3e','#e0c26a','#9b5de5','#ff6f91','#3aa6a6'];
+  const OUTFIT_COLORS = ['#ff6f91','#7ec8e3','#ffd93d','#9b5de5','#6bcB77','#ff9770','#f56fb7'];
+  const ACC_COLORS = ['#ffd93d','#ff6f91','#7ec8e3','#ffffff','#9b5de5'];
+
+  const SCENES = {
+    sky:   ['#bfe9ff','#eaf9ff'],
+    garden:['#c7ecc2','#eafbe6'],
+    sunset:['#ffd3a5','#fd9853'],
+    castle:['#d8c7f0','#f2e9ff'],
+    beach: ['#a9e4f2','#fff3d6']
+  };
+
+  function applyScene(){
+    const [a,b] = SCENES[state.scene] || SCENES.sky;
+    document.getElementById('stage').style.background = `linear-gradient(160deg, ${a}, ${b})`;
+  }
+
+  function hairBackPath(style){
+    if(style === 'pony'){
+      return `<path d="M60 70 Q30 140 55 210 Q65 220 78 210 Q60 150 82 78 Z" fill="${state.hairColor}"/>`;
+    }
+    if(style === 'braids'){
+      return `<path d="M55 80 Q40 130 48 200 Q58 210 66 198 Q56 140 72 84 Z" fill="${state.hairColor}"/>
+              <path d="M145 80 Q160 130 152 200 Q142 210 134 198 Q144 140 128 84 Z" fill="${state.hairColor}"/>`;
+    }
+    if(style === 'short'){
+      return '';
+    }
+    // buns (default)
+    return `<circle cx="46" cy="66" r="17" fill="${state.hairColor}"/><circle cx="154" cy="66" r="17" fill="${state.hairColor}"/>`;
+  }
+
+  function hairFrontPath(style){
+    const base = `<path d="M100 34 C60 34 46 70 50 100 C58 88 70 80 100 80 C130 80 142 88 150 100 C154 70 140 34 100 34 Z" fill="${state.hairColor}"/>`;
+    if(style === 'short'){
+      return `<path d="M100 30 C56 30 40 72 48 104 C58 82 76 74 100 74 C124 74 142 82 152 104 C160 72 144 30 100 30 Z" fill="${state.hairColor}"/>`;
+    }
+    return base;
+  }
+
+  function outfitPath(){
+    const c = state.outfitColor;
+    if(state.outfit === 'dress2'){
+      return `<path d="M100 145 L150 270 L50 270 Z" fill="${c}"/>
+              <path d="M78 145 L100 165 L122 145 L128 155 L100 185 L72 155 Z" fill="#ffffffaa"/>`;
+    }
+    if(state.outfit === 'overalls'){
+      return `<rect x="70" y="150" width="60" height="120" rx="14" fill="${c}"/>
+              <rect x="76" y="130" width="16" height="30" fill="${c}"/>
+              <rect x="108" y="130" width="16" height="30" fill="${c}"/>
+              <circle cx="84" cy="170" r="4" fill="#ffffffcc"/>
+              <circle cx="116" cy="170" r="4" fill="#ffffffcc"/>`;
+    }
+    if(state.outfit === 'skirtset'){
+      return `<rect x="78" y="140" width="44" height="46" rx="10" fill="#ffffff"/>
+              <path d="M96 182 L150 270 L50 270 Z" fill="${c}"/>`;
+    }
+    // dress1 default (A-line dress)
+    return `<path d="M100 140 L142 270 L58 270 Z" fill="${c}"/>
+            <path d="M100 140 Q100 160 100 172" stroke="#ffffff88" stroke-width="4" fill="none"/>
+            <circle cx="100" cy="150" r="5" fill="#ffffffcc"/>`;
+  }
+
+  function accessoryPath(){
+    if(state.accessory === 'bow'){
+      return `<g transform="translate(150,58) rotate(15)">
+        <path d="M0 0 L-16 -10 L-16 10 Z" fill="${state.accColor}"/>
+        <path d="M0 0 L16 -10 L16 10 Z" fill="${state.accColor}"/>
+        <circle cx="0" cy="0" r="4" fill="${state.accColor}"/>
+      </g>`;
+    }
+    if(state.accessory === 'crown'){
+      return `<path d="M70 34 L78 16 L90 30 L100 12 L110 30 L122 16 L130 34 Z" fill="${state.accColor}" stroke="#00000022"/>`;
+    }
+    if(state.accessory === 'glasses'){
+      return `<g stroke="${state.accColor}" stroke-width="4" fill="none">
+        <circle cx="86" cy="98" r="12"/>
+        <circle cx="114" cy="98" r="12"/>
+        <line x1="98" y1="98" x2="102" y2="98"/>
+      </g>`;
+    }
+    if(state.accessory === 'flower'){
+      return `<g transform="translate(52,62)">
+        <circle cx="0" cy="-8" r="5" fill="${state.accColor}"/>
+        <circle cx="7" cy="-3" r="5" fill="${state.accColor}"/>
+        <circle cx="7" cy="6" r="5" fill="${state.accColor}"/>
+        <circle cx="-7" cy="6" r="5" fill="${state.accColor}"/>
+        <circle cx="-7" cy="-3" r="5" fill="${state.accColor}"/>
+        <circle cx="0" cy="1" r="5" fill="#ffe36e"/>
+      </g>`;
+    }
+    return '';
+  }
+
+  function dollSVG(s){
+    const st = s || state;
+    const prev = state; // temp swap not needed; build directly using s via closures below
+    return buildDoll(st);
+  }
+
+  function buildDoll(s){
+    // build using local state object s
+    const oldState = Object.assign({}, state);
+    Object.assign(state, s);
+    const svg = `
+      <g>
+        ${hairBackPath(state.hairStyle)}
+        <!-- legs -->
+        <rect x="82" y="255" width="14" height="34" rx="6" fill="#ffcfa8"/>
+        <rect x="104" y="255" width="14" height="34" rx="6" fill="#ffcfa8"/>
+        <ellipse cx="89" cy="291" rx="12" ry="6" fill="#e85d75"/>
+        <ellipse cx="111" cy="291" rx="12" ry="6" fill="#e85d75"/>
+        <!-- arms -->
+        <rect x="52" y="150" width="14" height="70" rx="7" fill="#ffcfa8" transform="rotate(8 59 150)"/>
+        <rect x="134" y="150" width="14" height="70" rx="7" fill="#ffcfa8" transform="rotate(-8 141 150)"/>
+        <!-- outfit -->
+        ${outfitPath()}
+        <!-- head -->
+        <circle cx="100" cy="80" r="46" fill="#ffcfa8"/>
+        <!-- cheeks -->
+        <circle cx="74" cy="92" r="7" fill="#ff9db1" opacity="0.6"/>
+        <circle cx="126" cy="92" r="7" fill="#ff9db1" opacity="0.6"/>
+        <!-- eyes -->
+        <circle cx="84" cy="82" r="5" fill="#3a2e50"/>
+        <circle cx="116" cy="82" r="5" fill="#3a2e50"/>
+        <circle cx="86" cy="80" r="1.6" fill="#fff"/>
+        <circle cx="118" cy="80" r="1.6" fill="#fff"/>
+        <!-- smile -->
+        <path d="M88 96 Q100 106 112 96" stroke="#c9506f" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- hair front -->
+        ${hairFrontPath(state.hairStyle)}
+        <!-- accessory -->
+        ${accessoryPath()}
+      </g>
+    `;
+    Object.assign(state, oldState);
+    return svg;
+  }
+
+  function render(){
+    document.getElementById('doll').innerHTML = buildDoll(state);
+    applyScene();
+  }
+
+  // ---------- Panels ----------
+  const panels = {
+    hair: () => `
+      <label class="sub">Style</label>
+      <div class="row" id="hairStyleRow">
+        ${['buns','pony','braids','short'].map(v=>`<div class="opt${state.hairStyle===v?' selected':''}" data-val="${v}">${({buns:'🎀 Buns',pony:'🐴 Pony',braids:'🎋 Braids',short:'✂️ Short'})[v]}</div>`).join('')}
+      </div>
+      <label class="sub">Color</label>
+      <div class="row" id="hairColorRow">
+        ${HAIR_COLORS.map(c=>`<div class="swatch${state.hairColor===c?' selected':''}" style="background:${c}" data-val="${c}"></div>`).join('')}
+      </div>
+    `,
+    outfit: () => `
+      <label class="sub">Style</label>
+      <div class="row" id="outfitStyleRow">
+        ${['dress1','dress2','skirtset','overalls'].map(v=>`<div class="opt${state.outfit===v?' selected':''}" data-val="${v}">${({dress1:'👗 A-Line',dress2:'💫 Twirl',skirtset:'🎀 Skirt Set',overalls:'👖 Overalls'})[v]}</div>`).join('')}
+      </div>
+      <label class="sub">Color</label>
+      <div class="row" id="outfitColorRow">
+        ${OUTFIT_COLORS.map(c=>`<div class="swatch${state.outfitColor===c?' selected':''}" style="background:${c}" data-val="${c}"></div>`).join('')}
+      </div>
+    `,
+    face: () => `
+      <label class="sub">Accessory</label>
+      <div class="row" id="accRow">
+        ${['none','bow','crown','glasses','flower'].map(v=>`<div class="opt${state.accessory===v?' selected':''}" data-val="${v}">${({none:'🚫 None',bow:'🎀 Bow',crown:'👑 Crown',glasses:'👓 Glasses',flower:'🌸 Flower'})[v]}</div>`).join('')}
+      </div>
+      <label class="sub">Accessory Color</label>
+      <div class="row" id="accColorRow">
+        ${ACC_COLORS.map(c=>`<div class="swatch${state.accColor===c?' selected':''}" style="background:${c}" data-val="${c}"></div>`).join('')}
+      </div>
+    `,
+    scene: () => `
+      <label class="sub">Backdrop</label>
+      <div class="row" id="sceneRow">
+        ${Object.keys(SCENES).map(v=>`<div class="opt${state.scene===v?' selected':''}" data-val="${v}">${({sky:'☁️ Sky',garden:'🌷 Garden',sunset:'🌅 Sunset',castle:'🏰 Castle',beach:'🏖️ Beach'})[v]}</div>`).join('')}
+      </div>
+    `
+  };
+
+  let activeTab = 'hair';
+  function renderPanel(){
+    document.getElementById('panel').innerHTML = panels[activeTab]();
+    bindPanelEvents();
+  }
+
+  function bindPanelEvents(){
+    const map = {
+      hairStyleRow: v=>{ state.hairStyle=v; },
+      hairColorRow: v=>{ state.hairColor=v; },
+      outfitStyleRow: v=>{ state.outfit=v; },
+      outfitColorRow: v=>{ state.outfitColor=v; },
+      accRow: v=>{ state.accessory=v; },
+      accColorRow: v=>{ state.accColor=v; },
+      sceneRow: v=>{ state.scene=v; }
+    };
+    Object.keys(map).forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('click', (e)=>{
+        const t = e.target.closest('[data-val]');
+        if(!t) return;
+        map[id](t.dataset.val);
+        render();
+        renderPanel();
+      });
+    });
+  }
+
+  document.querySelectorAll('#tabs button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTab = btn.dataset.tab;
+      renderPanel();
+    });
+  });
+
+  // ---------- Surprise ----------
+  function randOf(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  document.getElementById('surpriseBtn').addEventListener('click', ()=>{
+    state.hairStyle = randOf(['buns','pony','braids','short']);
+    state.hairColor = randOf(HAIR_COLORS);
+    state.outfit = randOf(['dress1','dress2','skirtset','overalls']);
+    state.outfitColor = randOf(OUTFIT_COLORS);
+    state.accessory = randOf(['none','bow','crown','glasses','flower']);
+    state.accColor = randOf(ACC_COLORS);
+    state.scene = randOf(Object.keys(SCENES));
+    render();
+    renderPanel();
+  });
+
+  // ---------- Gallery (localStorage) ----------
+  const STORAGE_KEY = 'stuvi_looks_v1';
+  function loadLooks(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveLooks(looks){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(looks)); }catch(e){}
+  }
+  function renderGallery(){
+    const looks = loadLooks();
+    const strip = document.getElementById('galleryStrip');
+    if(looks.length === 0){
+      strip.innerHTML = '<span id="galleryEmpty">Saved looks will appear here ⭐</span>';
+      return;
+    }
+    strip.innerHTML = looks.map((look, i)=>`
+      <div class="thumb" data-i="${i}">
+        <svg viewBox="0 0 200 300">${buildDoll(look)}</svg>
+        <button data-del="${i}">✕</button>
+      </div>
+    `).join('');
+    strip.querySelectorAll('.thumb').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        if(e.target.closest('[data-del]')) return;
+        const i = +el.dataset.i;
+        const looks = loadLooks();
+        Object.assign(state, looks[i]);
+        render(); renderPanel();
+      });
+    });
+    strip.querySelectorAll('[data-del]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const i = +btn.dataset.del;
+        const looks = loadLooks();
+        looks.splice(i,1);
+        saveLooks(looks);
+        renderGallery();
+      });
+    });
+  }
+  document.getElementById('saveBtn').addEventListener('click', ()=>{
+    const looks = loadLooks();
+    looks.unshift(Object.assign({}, state));
+    if(looks.length > 8) looks.length = 8;
+    saveLooks(looks);
+    renderGallery();
+  });
+
+  try{
+    const looks = loadLooks();
+    if(looks.length) Object.assign(state, looks[0]);
+  }catch(e){}
+
+  render();
+  renderPanel();
+  renderGallery();
+})();
+</script>
+</body>
+</html>
